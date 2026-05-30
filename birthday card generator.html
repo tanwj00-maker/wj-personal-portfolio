@@ -2,56 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Birthday Card Chaos Machine</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
   <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    body {
+      letter-spacing: -0.02em;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    * {
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
-    :root {
-      --purple: #7c3aed;
-      --purple-light: #ede9fe;
-      --orange: #f97316;
-      --blue: #3b82f6;
-      --blue-light: #dbeafe;
-      --indigo: #4f46e5;
-      --green: #22c55e;
-      --pink: #ec4899;
-      --pink-light: #fce7f3;
-      --yellow-light: #fefce8;
-      --white: #ffffff;
-      --gray-400: #9ca3af;
-      --gray-600: #4b5563;
-      --gray-700: #374151;
-    }
-
-    html, body {
-      min-height: 100%;
-      width: 100%;
-      overflow-x: hidden;
-    }
-
-    body {
-      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #93c5fd 0%, #fed7aa 50%, #a5b4fc 100%);
-      background-attachment: fixed;
-      padding: 24px 16px;
-    }
-
-    /* ⭐ STARS */
+    /* ⭐ FLOATING STARS */
     .star {
       position: fixed;
+      width: 6px;
+      height: 6px;
       background: white;
       border-radius: 50%;
       opacity: 0.8;
@@ -61,15 +39,16 @@
     }
 
     @keyframes floatStar {
-      0%   { transform: translateY(0px); opacity: 0.2; }
-      50%  { opacity: 1; }
+      0% { transform: translateY(0px); opacity: 0.2; }
+      50% { opacity: 1; }
       100% { transform: translateY(-40px); opacity: 0.2; }
     }
 
+    /* 🌠 SHOOTING STARS */
     .shooting-star {
       position: fixed;
-      width: 160px;
-      height: 4px;
+      width: 240px;
+      height: 5px;
       background: linear-gradient(90deg, white, transparent);
       opacity: 0;
       transform: rotate(-45deg);
@@ -79,394 +58,162 @@
     }
 
     @keyframes shoot {
-      0%   { transform: translate(0, 0) rotate(-45deg); opacity: 0; }
-      10%  { opacity: 1; }
-      100% { transform: translate(-900px, 900px) rotate(-45deg); opacity: 0; }
-    }
-
-    /* LAYOUT */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 10;
-    }
-
-    /* HEADER */
-    .header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .header h1 {
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.2;
-      margin-bottom: 8px;
-    }
-
-    .gradient-text {
-      background: linear-gradient(90deg, var(--indigo), var(--purple), var(--blue));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .header p {
-      font-size: 1rem;
-      color: var(--gray-600);
-      font-weight: 500;
-    }
-
-    /* GRID */
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    @media (min-width: 900px) {
-      .grid {
-        grid-template-columns: 1fr 1fr;
+      0% {
+        transform: translate(0, 0) rotate(-45deg);
+        opacity: 0;
       }
-    }
-
-    /* CARDS / PANELS */
-    .panel {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-      padding: 28px;
-      border: 3px solid #d8b4fe;
-    }
-
-    .panel h2 {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--purple);
-      margin-bottom: 20px;
-      letter-spacing: -0.02em;
-    }
-
-    /* INPUTS */
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    input[type="text"],
-    input[type="number"] {
-      width: 100%;
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 2px solid var(--blue-light);
-      font-size: 1rem;
-      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-      background: white;
-      color: var(--gray-700);
-      outline: none;
-      transition: border-color 0.2s;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    input:focus {
-      border-color: var(--purple);
-    }
-
-    /* BUTTONS */
-    .btn-row {
-      display: flex;
-      gap: 12px;
-      flex-direction: column;
-    }
-
-    @media (min-width: 480px) {
-      .btn-row {
-        flex-direction: row;
+      10% { opacity: 1; }
+      100% {
+        transform: translate(-1100px, 1100px) rotate(-45deg);
+        opacity: 0;
       }
-    }
-
-    .btn {
-      flex: 1;
-      padding: 14px 20px;
-      border-radius: 50px;
-      border: none;
-      font-size: 1rem;
-      font-weight: 600;
-      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-      cursor: pointer;
-      color: white;
-      transition: transform 0.15s, box-shadow 0.15s;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-
-    .btn:active {
-      transform: scale(0.97);
-    }
-
-    .btn-generate {
-      background: linear-gradient(135deg, var(--purple), var(--orange));
-      box-shadow: 0 4px 20px rgba(124,58,237,0.35);
-    }
-
-    .btn-download {
-      background: linear-gradient(135deg, var(--blue), var(--green));
-      box-shadow: 0 4px 20px rgba(59,130,246,0.35);
-    }
-
-    /* BIRTHDAY CARD */
-    .card-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    .card-bg {
-      position: absolute;
-      inset: 0;
-      background: #a5b4fc;
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-      transform: rotate(-2deg);
-    }
-
-    .card-inner {
-      position: relative;
-      background: white;
-      border-radius: 20px;
-      margin: 6px;
-      display: flex;
-      overflow: hidden;
-      min-height: 280px;
-    }
-
-    .card-left {
-      width: 50%;
-      background: linear-gradient(180deg, #dbeafe, #dcfce7);
-      border-right: 2px solid #e5e7eb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
-    }
-
-    .card-left-content {
-      text-align: center;
-    }
-
-    .card-emoji {
-      font-size: 2.8rem;
-      display: block;
-      margin-bottom: 12px;
-      line-height: 1;
-    }
-
-    .card-left h3 {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--indigo);
-      letter-spacing: -0.02em;
-    }
-
-    .card-right {
-      width: 50%;
-      padding: 24px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    #cardMessage {
-      font-family: "Poppins", sans-serif;
-      font-size: 0.9rem;
-      font-style: italic;
-      color: var(--gray-600);
-      text-align: center;
-      line-height: 1.6;
-    }
-
-    /* HISTORY PANEL */
-    .history-panel {
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 24px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-      padding: 24px;
-      border: 2px solid #e9d5ff;
-    }
-
-    .history-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-    }
-
-    .history-header h2 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--purple);
-    }
-
-    .saved-badge {
-      background: var(--indigo);
-      color: white;
-      padding: 4px 12px;
-      border-radius: 50px;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-
-    .history-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      max-height: 300px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .history-empty {
-      color: var(--gray-400);
-      font-style: italic;
-      text-align: center;
-      padding: 32px 0;
-      font-size: 0.95rem;
-    }
-
-    .history-item {
-      background: linear-gradient(135deg, var(--yellow-light), var(--pink-light));
-      border-radius: 16px;
-      padding: 14px;
-      border: 1px solid #fbcfe8;
-    }
-
-    .history-item-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .history-name {
-      font-weight: 600;
-      color: var(--pink);
-      font-size: 0.9rem;
-    }
-
-    .history-item-body {
-      font-size: 0.85rem;
-      color: var(--gray-700);
-      line-height: 1.5;
-    }
-
-    /* RIGHT COLUMN */
-    .right-col {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
     }
   </style>
 </head>
 
-<body>
+<body class="min-h-screen bg-gradient-to-br from-blue-300 via-orange-200 to-indigo-300 p-6">
 
 <script>
-  function createStars(count) {
-    count = count || 60;
-    for (var i = 0; i < count; i++) {
-      var star = document.createElement("div");
+  function createStars(count = 90) {
+    for (let i = 0; i < count; i++) {
+      const star = document.createElement("div");
       star.className = "star";
-      var size = (3 + Math.random() * 5) + "px";
-      star.style.width = size;
-      star.style.height = size;
-      star.style.left = (Math.random() * 100) + "vw";
-      star.style.top = (Math.random() * 100) + "vh";
+
+      const size = 3 + Math.random() * 5;
+      star.style.width = size + "px";
+      star.style.height = size + "px";
+
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.top = Math.random() * window.innerHeight + "px";
       star.style.animationDuration = (3 + Math.random() * 6) + "s";
-      star.style.animationDelay = (Math.random() * 5) + "s";
+
       document.body.appendChild(star);
     }
   }
 
-  function createShootingStars(count) {
-    count = count || 6;
-    for (var i = 0; i < count; i++) {
-      var s = document.createElement("div");
+  function createShootingStars(count = 10) {
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement("div");
       s.className = "shooting-star";
-      s.style.left = (60 + Math.random() * 40) + "vw";
-      s.style.top = (Math.random() * 40) + "vh";
-      s.style.animationDelay = (Math.random() * 10) + "s";
+
+      s.style.left = (window.innerWidth * (0.6 + Math.random() * 0.4)) + "px";
+      s.style.top = Math.random() * window.innerHeight * 0.5 + "px";
+      s.style.animationDelay = Math.random() * 8 + "s";
+
       document.body.appendChild(s);
     }
   }
 
-  document.addEventListener("DOMContentLoaded", function() {
+  window.onload = () => {
     createStars();
     createShootingStars();
-  });
+  };
 </script>
 
-<div class="container">
+<div class="max-w-7xl mx-auto relative z-10">
 
-  <div class="header">
-    <h1>
-      🎉 <span class="gradient-text">Birthday Card Chaos Machine</span> 🎂
-    </h1>
-    <p>Generate birthday card messages for your favourite old people 😎</p>
+  <!-- HEADER -->
+  <div class="text-center mb-8">
+    <h1 class="text-5xl font-extrabold tracking-tight mb-3">
+  🎉
+  <span class="bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500 text-transparent bg-clip-text">
+    Birthday Card Chaos Machine
+  </span>
+  🎂
+</h1>
+    <p class="text-lg text-gray-700 font-medium tracking-tight">
+      Generate birthday card messages for your favourite old people 😎
+    </p>
   </div>
 
-  <div class="grid">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
 
-    <!-- LEFT: INPUTS -->
-    <div class="panel">
-      <h2>✨ Create Your Birthday Message</h2>
-      <div class="input-group">
-        <input type="text" id="nameInput" placeholder="Birthday Person's Name" autocomplete="off" />
-        <input type="number" id="ageInput" placeholder="Their Age" min="1" max="150" autocomplete="off" />
-        <div class="btn-row">
-          <button class="btn btn-generate" onclick="generateMessage()">🎈 Generate Card</button>
-          <button class="btn btn-download" onclick="downloadCard()">🎁 Download Card</button>
+    <!-- LEFT SIDE (RESTORED INPUTS) -->
+    <div class="bg-white/80 backdrop-blur rounded-3xl shadow-2xl p-8 border-4 border-purple-300">
+
+      <h2 class="text-2xl font-extrabold text-purple-600 mb-6 tracking-tight">
+        ✨ Create Your Birthday Message
+      </h2>
+
+      <div class="space-y-5">
+
+        <input id="nameInput" placeholder="Birthday Person's Name"
+          class="w-full p-4 rounded-2xl border border-blue-200 text-lg"/>
+
+        <input id="ageInput" placeholder="Their Age"
+          class="w-full p-4 rounded-2xl border border-blue-200 text-lg"/>
+
+        <div class="flex gap-4">
+
+          <button onclick="generateMessage()"
+            class="w-full bg-gradient-to-r from-purple-500 to-orange-400 text-white font-semibold py-4 rounded-3xl shadow-lg">
+            🎈 Generate Card
+          </button>
+
+          <button onclick="downloadCard()"
+            class="w-full bg-gradient-to-r from-blue-500 to-green-500 text-white font-semibold py-4 rounded-3xl shadow-lg">
+            🎁 Download Card
+          </button>
+
         </div>
       </div>
     </div>
 
-    <!-- RIGHT: CARD + HISTORY -->
-    <div class="right-col">
+    <!-- RIGHT SIDE -->
+    <div class="space-y-6">
 
-      <!-- BIRTHDAY CARD -->
-      <div class="card-wrapper" id="birthdayCard">
-        <div class="card-bg"></div>
-        <div class="card-inner">
-          <div class="card-left">
-            <div class="card-left-content">
-              <span class="card-emoji">🎂</span>
-              <h3>Happy Birthday!</h3>
+      <!-- CARD -->
+      <div id="birthdayCard" class="relative mx-auto w-full max-w-xl h-[420px]">
+
+        <div class="absolute inset-0 bg-indigo-300 rounded-3xl shadow-2xl rotate-[-2deg]"></div>
+
+        <div class="absolute inset-3 bg-white rounded-3xl shadow-inner flex overflow-hidden">
+
+          <!-- LEFT PAGE -->
+          <div class="w-1/2 bg-gradient-to-b from-blue-200 to-green-200 border-r flex items-center justify-center p-6">
+
+            <div class="text-center">
+              <!-- RESTORED CAKE EMOJI -->
+              <div class="text-5xl mb-4">🎂</div>
+
+              <h3 class="text-2xl font-extrabold text-indigo-600">
+                Happy Birthday!
+              </h3>
             </div>
+
           </div>
-          <div class="card-right">
-            <p id="cardMessage">Your message appears here ✨</p>
+
+          <!-- RIGHT PAGE -->
+          <div class="w-1/2 p-6 flex items-center justify-center">
+            <p id="cardMessage"
+              class="text-gray-600 text-lg italic text-center"
+              style="font-family: 'Poppins', sans-serif;">
+              Your message appears here ✨
+            </p>
           </div>
+
         </div>
       </div>
 
-      <!-- HISTORY -->
-      <div class="history-panel">
-        <div class="history-header">
-          <h2>🕰 Previous Birthday Cards</h2>
-          <span class="saved-badge" id="savedCount">0 saved</span>
+      <!-- HISTORY (RESTORED) -->
+      <div class="bg-white/80 backdrop-blur rounded-3xl shadow-xl p-6 border border-purple-200">
+
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold text-purple-600">
+            🕰 Previous Birthday Cards
+          </h2>
+
+          <span id="savedCount" class="bg-indigo-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+            0 saved
+          </span>
         </div>
-        <div class="history-list" id="historyContainer">
-          <p class="history-empty">No birthday masterpieces yet...</p>
+
+        <div id="historyContainer" class="space-y-4 max-h-[320px] overflow-y-auto pr-2">
+          <p class="text-gray-400 italic text-center py-6">
+            No birthday masterpieces yet...
+          </p>
         </div>
+
       </div>
 
     </div>
@@ -474,129 +221,70 @@
 </div>
 
 <script>
-  var openers = ["Congratulations!", "Breaking News!", "Alert 🚨", "Scientific discovery:", "Official announcement:"];
-  var jokes = [
-    "you're now old enough to complain about the weather unironically.",
-    "your back now makes more sounds than your Spotify playlist.",
-    "your candles cost more than the cake.",
-    "you've officially entered the 'make weird noises when standing up' era.",
-    "your metabolism has left the group chat.",
-    "you're basically a vintage collectible now.",
-    "you now understand why people get excited over air fryers.",
-    "your knees have started sending warning notifications."
-  ];
-  var extras = [
-    "Still younger than a dinosaur though 🦖",
-    "At least you still know your passwords... probably.",
-    "Remember: wrinkles are just laugh receipts.",
-    "Don't worry, cake calories disappear on birthdays.",
-    "Time to pretend you enjoy gardening and herbal tea.",
-    "You're aging like fine wine... slightly expensive and confusing."
-  ];
+  const openers = ["Congratulations!", "Breaking News!", "Alert 🚨", "Scientific discovery:", "Official announcement:"];
+  const jokes = ["you’re now old enough to complain about the weather unironically.", "your back now makes more sounds than your Spotify playlist.", "your candles cost more than the cake.", "you’ve officially entered the ‘make weird noises when standing up’ era.", "your metabolism has left the group chat.", "you’re basically a vintage collectible now.", "you now understand why people get excited over air fryers.", "your knees have started sending warning notifications."];
+  const extras = ["Still younger than a dinosaur though 🦖", "At least you still know your passwords... probably.", "Remember: wrinkles are just laugh receipts.", "Don’t worry, cake calories disappear on birthdays.", "Time to pretend you enjoy gardening and herbal tea.", "You’re aging like fine wine... slightly expensive and confusing."];
 
-  var history = [];
-
-  function rand(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
-  }
+  let history = [];
 
   function generateMessage() {
-    var name = document.getElementById("nameInput").value.trim();
-    var age = document.getElementById("ageInput").value.trim();
+    const name = document.getElementById("nameInput").value;
+    const age = document.getElementById("ageInput").value;
 
-    if (!name || !age) {
-      alert("Please enter both a name and an age!");
-      return;
-    }
+    if (!name || !age) return alert("Please enter both name and age!");
 
-    var message = rand(openers) + " " + name + " just turned " + age + "! " + rand(jokes) + " " + rand(extras);
+    const message =
+      `${openers[Math.floor(Math.random() * openers.length)]} ` +
+      `${name} just turned ${age}! ` +
+      `${jokes[Math.floor(Math.random() * jokes.length)]} ` +
+      `${extras[Math.floor(Math.random() * extras.length)]}`;
 
-    document.getElementById("cardMessage").textContent = message;
+    document.getElementById("cardMessage").innerHTML = message;
 
-    history.unshift({ name: name, age: age, message: message });
+    history.unshift({ name, age, message });
     updateHistory();
   }
 
   function downloadCard() {
-    var card = document.getElementById("birthdayCard");
-
-    // Try html2canvas if available, otherwise fallback
-    if (typeof html2canvas !== "undefined") {
-      html2canvas(card, {
-        backgroundColor: null,
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        logging: false
-      }).then(function(canvas) {
-        saveCanvas(canvas);
-      }).catch(function() {
-        fallbackDownload();
-      });
-    } else {
-      fallbackDownload();
-    }
-  }
-
-  function saveCanvas(canvas) {
-    try {
-      var link = document.createElement("a");
-      link.download = "birthday-card.png";
-      link.href = canvas.toDataURL("image/png");
-      document.body.appendChild(link);
+    html2canvas(document.getElementById("birthdayCard"), {
+      backgroundColor: "#ffffff",
+      scale: 2
+    }).then(canvas => {
+      const link = document.createElement("a");
+      link.download = "birthday-card.jpg";
+      link.href = canvas.toDataURL("image/jpeg", 1.0);
       link.click();
-      document.body.removeChild(link);
-    } catch(e) {
-      fallbackDownload();
-    }
-  }
-
-  function fallbackDownload() {
-    // Mobile fallback: open card text in a new window for screenshot
-    var name = document.getElementById("nameInput").value.trim() || "Friend";
-    var msg = document.getElementById("cardMessage").textContent;
-    var win = window.open("", "_blank");
-    if (win) {
-      win.document.write(
-        '<html><head><meta name="viewport" content="width=device-width,initial-scale=1">' +
-        '<style>body{font-family:Georgia,serif;background:linear-gradient(135deg,#a5b4fc,#fed7aa);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}' +
-        '.card{background:white;border-radius:20px;padding:40px;max-width:400px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.2);}' +
-        'h2{color:#4f46e5;font-size:1.8rem;margin-bottom:16px;}p{color:#374151;font-size:1.1rem;line-height:1.7;font-style:italic;}' +
-        '.tip{margin-top:20px;color:#9ca3af;font-size:0.8rem;}</style></head><body>' +
-        '<div class="card"><div style="font-size:3rem">🎂</div><h2>Happy Birthday!</h2><p>' + msg + '</p>' +
-        '<p class="tip">Take a screenshot to save this card</p></div></body></html>'
-      );
-      win.document.close();
-    } else {
-      alert("Card message: " + msg + "\n\nTake a screenshot to save your card!");
-    }
+    });
   }
 
   function updateHistory() {
-  var container = document.getElementById("historyContainer");
-  var badge = document.getElementById("savedCount");
-  badge.textContent = history.length + " saved";
-  container.innerHTML = "";
+    const container = document.getElementById("historyContainer");
+    const count = document.getElementById("savedCount");
 
-  history.forEach(function(card) {
-    var div = document.createElement("div");
-    div.className = "history-item";
-    div.innerHTML =
-      '<div class="history-item-header">' +
-        '<span class="history-name">' + escapeHtml(card.name) + ' · ' + escapeHtml(card.age) + '</span>' +
-        '<span>🎉</span>' +
-      '</div>' +
-      '<div class="history-item-body">' + escapeHtml(card.message) + '</div>';
-    container.appendChild(div);
-  });
+    count.innerText = `${history.length} saved`;
 
-  // ✅ ADD THIS LINE
-  localStorage.setItem("history", JSON.stringify(history));
-}
+    container.innerHTML = "";
+
+    history.forEach(card => {
+      const div = document.createElement("div");
+
+      div.className =
+        "bg-gradient-to-r from-yellow-100 to-pink-100 rounded-2xl p-4 border border-pink-200";
+
+      div.innerHTML = `
+        <div class="flex justify-between mb-2">
+          <div class="font-semibold text-pink-600">${card.name} • ${card.age}</div>
+          <div>🎉</div>
+        </div>
+        <div class="text-gray-700 text-sm leading-relaxed">
+          ${card.message}
+        </div>
+      `;
+
+      container.appendChild(div);
+    });
+  }
 </script>
-
-<!-- html2canvas loaded AFTER page for better mobile compat -->
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js" async></script>
 
 </body>
 </html>
