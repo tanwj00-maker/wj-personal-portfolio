@@ -80,20 +80,31 @@
     }
 
     /* ─── NEBULA ─── */
+    /*
+      filter:blur() inside a fixed container creates a stacking
+      context that collapses on some browsers. Use a multi-stop
+      radial-gradient to fake the soft glow instead — no filter needed.
+    */
     .nebula {
-      width: 600px;
-      height: 600px;
+      width: 700px;
+      height: 700px;
       border-radius: 50%;
-      filter: blur(110px);
-      opacity: 0.28;
     }
     .nebula1 {
       top: -200px; left: -200px;
-      background: radial-gradient(circle, rgba(99,102,241,0.9), transparent 60%);
+      background: radial-gradient(circle at center,
+        rgba(99,102,241,0.45) 0%,
+        rgba(99,102,241,0.18) 30%,
+        rgba(99,102,241,0.06) 55%,
+        transparent 70%);
     }
     .nebula2 {
       bottom: -250px; right: -200px;
-      background: radial-gradient(circle, rgba(168,85,247,0.9), transparent 60%);
+      background: radial-gradient(circle at center,
+        rgba(168,85,247,0.45) 0%,
+        rgba(168,85,247,0.18) 30%,
+        rgba(168,85,247,0.06) 55%,
+        transparent 70%);
     }
 
     /* ─── STARS ─── */
@@ -512,7 +523,7 @@
             <div class="text-5xl mb-5">🤖</div>
             <h3 class="text-2xl font-bold mb-4">Upcoming AI Project</h3>
             <p class="text-gray-300 leading-relaxed mb-6">
-              Placeholder for future AI, analytics, or data visualisation projects.
+              AI, analytics, and data visualisation projects in progress.
             </p>
             <a href="#" class="text-blue-300 font-semibold hover:text-blue-200 transition">
               Coming Soon →
