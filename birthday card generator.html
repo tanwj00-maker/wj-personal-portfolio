@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Card Chaos Machine</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+  <style>
+    body {
+      letter-spacing: -0.02em;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    * {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ⭐ FLOATING STARS */
+    .star {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: floatStar 6s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes floatStar {
+      0% { transform: translateY(0px); opacity: 0.2; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-40px); opacity: 0.2; }
+    }
+
+    /* 🌠 SHOOTING STARS */
+    .shooting-star {
+      position: fixed;
+      width: 240px;
+      height: 5px;
+      background: linear-gradient(90deg, white, transparent);
+      opacity: 0;
+      transform: rotate(-45deg);
+      animation: shoot 7s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes shoot {
+      0% {
+        transform: translate(0, 0) rotate(-45deg);
+        opacity: 0;
+      }
+      10% { opacity: 1; }
+      100% {
+        transform: translate(-1100px, 1100px) rotate(-45deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-blue-300 via-orange-200 to-indigo-300 p-6">
+
+<script>
+  function createStars(count = 90) {
+    for (let i = 0; i < count; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+
+      const size = 3 + Math.random() * 5;
+      star.style.width = size + "px";
+      star.style.height = size + "px";
+
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.animationDuration = (3 + Math.random() * 6) + "s";
+
+      document.body.appendChild(star);
+    }
+  }
+
+  function createShootingStars(count = 10) {
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement("div");
+      s.className = "shooting-star";
+
+      s.style.left = (window.innerWidth * (0.6 + Math.random() * 0.4)) + "px";
+      s.style.top = Math.random() * window.innerHeight * 0.5 + "px";
+      s.style.animationDelay = Math.random() * 8 + "s";
+
+      document.body.appendChild(s);
+    }
+  }
+
+  window.onload = () => {
+    createStars();
+    createShootingStars();
+  };
+</script>
+
+<div class="max-w-7xl mx-auto relative z-10">
+
+  <!-- HEADER -->
+  <div class="text-center mb-8">
+    <h1 class="text-5xl font-extrabold tracking-tight mb-3">
+  🎉
+  <span class="bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500 text-transparent bg-clip-text">
+    Birthday Card Chaos Machine
+  </span>
+  🎂
+</h1>
+    <p class="text-lg text-gray-700 font-medium tracking-tight">
+      Generate birthday card messages for your favourite old people 😎
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+
+    <!-- LEFT SIDE (RESTORED INPUTS) -->
+    <div class="bg-white/80 backdrop-blur rounded-3xl shadow-2xl p-8 border-4 border-purple-300">
+
+      <h2 class="text-2xl font-extrabold text-purple-600 mb-6 tracking-tight">
+        ✨ Create Your Birthday Message
+      </h2>
+
+      <div class="space-y-5">
+
+        <input id="nameInput" placeholder="Birthday Person's Name"
+          class="w-full p-4 rounded-2xl border border-blue-200 text-lg"/>
+
+        <input id="ageInput" placeholder="Their Age"
+          class="w-full p-4 rounded-2xl border border-blue-200 text-lg"/>
+
+        <div class="flex gap-4">
+
+          <button onclick="generateMessage()"
+            class="w-full bg-gradient-to-r from-purple-500 to-orange-400 text-white font-semibold py-4 rounded-3xl shadow-lg">
+            🎈 Generate Card
+          </button>
+
+          <button onclick="downloadCard()"
+            class="w-full bg-gradient-to-r from-blue-500 to-green-500 text-white font-semibold py-4 rounded-3xl shadow-lg">
+            🎁 Download Card
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="space-y-6">
+
+      <!-- CARD -->
+      <div id="birthdayCard" class="relative mx-auto w-full max-w-xl h-[420px]">
+
+        <div class="absolute inset-0 bg-indigo-300 rounded-3xl shadow-2xl rotate-[-2deg]"></div>
+
+        <div class="absolute inset-3 bg-white rounded-3xl shadow-inner flex overflow-hidden">
+
+          <!-- LEFT PAGE -->
+          <div class="w-1/2 bg-gradient-to-b from-blue-200 to-green-200 border-r flex items-center justify-center p-6">
+
+            <div class="text-center">
+              <!-- RESTORED CAKE EMOJI -->
+              <div class="text-5xl mb-4">🎂</div>
+
+              <h3 class="text-2xl font-extrabold text-indigo-600">
+                Happy Birthday!
+              </h3>
+            </div>
+
+          </div>
+
+          <!-- RIGHT PAGE -->
+          <div class="w-1/2 p-6 flex items-center justify-center">
+            <p id="cardMessage"
+              class="text-gray-600 text-lg italic text-center"
+              style="font-family: 'Poppins', sans-serif;">
+              Your message appears here ✨
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- HISTORY (RESTORED) -->
+      <div class="bg-white/80 backdrop-blur rounded-3xl shadow-xl p-6 border border-purple-200">
+
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold text-purple-600">
+            🕰 Previous Birthday Cards
+          </h2>
+
+          <span id="savedCount" class="bg-indigo-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+            0 saved
+          </span>
+        </div>
+
+        <div id="historyContainer" class="space-y-4 max-h-[320px] overflow-y-auto pr-2">
+          <p class="text-gray-400 italic text-center py-6">
+            No birthday masterpieces yet...
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const openers = ["Congratulations!", "Breaking News!", "Alert 🚨", "Scientific discovery:", "Official announcement:"];
+  const jokes = ["you’re now old enough to complain about the weather unironically.", "your back now makes more sounds than your Spotify playlist.", "your candles cost more than the cake.", "you’ve officially entered the ‘make weird noises when standing up’ era.", "your metabolism has left the group chat.", "you’re basically a vintage collectible now.", "you now understand why people get excited over air fryers.", "your knees have started sending warning notifications."];
+  const extras = ["Still younger than a dinosaur though 🦖", "At least you still know your passwords... probably.", "Remember: wrinkles are just laugh receipts.", "Don’t worry, cake calories disappear on birthdays.", "Time to pretend you enjoy gardening and herbal tea.", "You’re aging like fine wine... slightly expensive and confusing."];
+
+  let history = [];
+
+  function generateMessage() {
+    const name = document.getElementById("nameInput").value;
+    const age = document.getElementById("ageInput").value;
+
+    if (!name || !age) return alert("Please enter both name and age!");
+
+    const message =
+      `${openers[Math.floor(Math.random() * openers.length)]} ` +
+      `${name} just turned ${age}! ` +
+      `${jokes[Math.floor(Math.random() * jokes.length)]} ` +
+      `${extras[Math.floor(Math.random() * extras.length)]}`;
+
+    document.getElementById("cardMessage").innerHTML = message;
+
+    history.unshift({ name, age, message });
+    updateHistory();
+  }
+
+  function downloadCard() {
+    html2canvas(document.getElementById("birthdayCard"), {
+      backgroundColor: "#ffffff",
+      scale: 2
+    }).then(canvas => {
+      const link = document.createElement("a");
+      link.download = "birthday-card.jpg";
+      link.href = canvas.toDataURL("image/jpeg", 1.0);
+      link.click();
+    });
+  }
+
+  function updateHistory() {
+    const container = document.getElementById("historyContainer");
+    const count = document.getElementById("savedCount");
+
+    count.innerText = `${history.length} saved`;
+
+    container.innerHTML = "";
+
+    history.forEach(card => {
+      const div = document.createElement("div");
+
+      div.className =
+        "bg-gradient-to-r from-yellow-100 to-pink-100 rounded-2xl p-4 border border-pink-200";
+
+      div.innerHTML = `
+        <div class="flex justify-between mb-2">
+          <div class="font-semibold text-pink-600">${card.name} • ${card.age}</div>
+          <div>🎉</div>
+        </div>
+        <div class="text-gray-700 text-sm leading-relaxed">
+          ${card.message}
+        </div>
+      `;
+
+      container.appendChild(div);
+    });
+  }
+</script>
+
+</body>
+</html>
