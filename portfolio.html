@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Tan Wen Jun | Portfolio</title>
+
+  <!-- GOOGLE FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- TAILWIND -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+
+    * {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(59,130,246,0.25), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(168,85,247,0.25), transparent 25%),
+        linear-gradient(to bottom, #040814 0%, #071120 45%, #050816 100%);
+      color: white;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ================= NEBULA GLOW ================= */
+
+    .nebula {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: -4;
+    }
+
+    .nebula1 {
+      top: -200px;
+      left: -200px;
+      background: radial-gradient(circle,
+        rgba(99,102,241,0.8),
+        transparent 60%);
+    }
+
+    .nebula2 {
+      bottom: -250px;
+      right: -200px;
+      background: radial-gradient(circle,
+        rgba(168,85,247,0.8),
+        transparent 60%);
+    }
+
+    /* ================= GLASS EFFECT ================= */
+
+    .glass {
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* TEXT */
+    .gradient-text {
+      background: linear-gradient(to right, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .glow { box-shadow: 0 0 40px rgba(124,58,237,0.25); }
+
+    .project-card { transition: all 0.3s ease; }
+    .project-card:hover { transform: translateY(-6px); }
+
+    .floating { animation: float 5s ease-in-out infinite; }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .tag {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* ================= STARS ================= */
+
+.stars,
+.twinkling {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -3;
+}
+
+/* base star layer */
+.stars::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+
+  box-shadow:
+    6vw 10vh white,
+    8vw 12vh white,
+    12vw 78vh rgba(255,255,255,0.7),
+    14vw 40vh white,
+    18vw 35vh white,
+    16vw 94vh white,
+    22vw 65vh rgba(255,255,255,0.6),
+    24vw 60vh rgba(255,255,255,0.6),
+    27vw 18vh white,
+    31vw 22vh white,
+    34vw 88vh rgba(255,255,255,0.8),
+    37vw 82vh rgba(255,255,255,0.8),
+    49vw 64vh white,
+    44vw 50vh white,
+    47vw 30vh rgba(255,255,255,0.6),
+    57vw 92vh white,
+    52vw 15vh rgba(255,255,255,0.6),
+    55vw 72vh white,
+    58vw 70vh white,
+    61vw 45vh rgba(255,255,255,0.5),
+    63vw 40vh rgba(255,255,255,0.5),
+    66vw 20vh white,
+    69vw 87vh white,
+    72vw 33vh rgba(255,255,255,0.7),
+    74vw 28vh rgba(255,255,255,0.7),
+    78vw 60vh white,
+    81vw 65vh white,
+    84vw 18vh rgba(255,255,255,0.6),
+    88vw 45vh rgba(255,255,255,0.6),
+    91vw 52vh white,
+    95vw 40vh white,
+    96vw 75vh rgba(255,255,255,0.7);
+}
+
+/* twinkle layer (slightly different stars) */
+.twinkling::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+
+  box-shadow:
+    5vw 22vh rgba(255,255,255,0.35),
+    9vw 60vh rgba(255,255,255,0.25),
+    13vw 38vh rgba(255,255,255,0.4),
+    16vw 80vh rgba(255,255,255,0.3),
+    21vw 28vh rgba(255,255,255,0.5),
+    25vw 55vh rgba(255,255,255,0.4),
+    28vw 30vh rgba(255,255,255,0.5),
+    32vw 70vh rgba(255,255,255,0.3),
+    36vw 18vh rgba(255,255,255,0.35),
+    40vw 62vh rgba(255,255,255,0.4),
+    45vw 48vh rgba(255,255,255,0.35),
+    49vw 85vh rgba(255,255,255,0.4),
+    53vw 25vh rgba(255,255,255,0.3),
+    57vw 68vh rgba(255,255,255,0.5),
+    60vw 40vh rgba(255,255,255,0.35),
+    64vw 78vh rgba(255,255,255,0.4),
+    68vw 20vh rgba(255,255,255,0.3),
+    72vw 58vh rgba(255,255,255,0.5),
+    76vw 35vh rgba(255,255,255,0.35),
+    80vw 72vh rgba(255,255,255,0.4),
+    84vw 50vh rgba(255,255,255,0.3),
+    88vw 30vh rgba(255,255,255,0.5),
+    92vw 65vh rgba(255,255,255,0.35),
+    95vw 42vh rgba(255,255,255,0.4);
+}
+
+    .twinkling {
+      background: radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 2px);
+      background-size: 200px 200px;
+      animation: twinkle 6s linear infinite;
+      opacity: 0.4;
+      z-index: -2;
+    }
+
+    @keyframes twinkle {
+      0% { transform: translateY(0px); opacity: 0.25; }
+      50% { opacity: 0.6; }
+      100% { transform: translateY(-30px); opacity: 0.25; }
+    }
+
+    /* ================= PLANETS ================= */
+
+    .planet {
+      position: fixed;
+      border-radius: 999px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .planet1 {
+      width: 240px;
+      height: 240px;
+      top: 120px;
+      right: -40px;
+      background: radial-gradient(circle at 30% 30%,
+        #93c5fd, #3b82f6, #1e3a8a);
+      opacity: 0.35;
+    }
+
+    .planet2 {
+      width: 160px;
+      height: 160px;
+      bottom: 120px;
+      left: -40px;
+      background: radial-gradient(circle at 30% 30%,
+        #d8b4fe, #8b5cf6, #4c1d95);
+      opacity: 0.3;
+    }
+
+    /* ================= SHOOTING STARS ================= */
+
+    .shooting-star {
+      position: fixed;
+      width: 180px;
+      height: 2px;
+      background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1));
+      border-radius: 999px;
+      transform: rotate(-35deg);
+      opacity: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .shooting1 { top: 20%; left: 65%; animation: shoot1 7s linear infinite; }
+    .shooting2 { top: 40%; left: 75%; animation: shoot2 10s linear infinite; }
+    .shooting3 { top: 10%; left: 25%; animation: shoot3 12s linear infinite; }
+    .shooting4 { top: 68%; left: 80%; animation: shoot4 11s linear infinite; }
+    .shooting5 { top: 5%; left: 45%; animation: shoot5 15s linear infinite; }
+
+    @keyframes shoot1 {
+      0% { opacity: 0; transform: translate(0,0) rotate(-35deg); }
+      8% { opacity: 1; }
+      20% { opacity: 0; transform: translate(-350px, 250px) rotate(-35deg); }
+      100% { opacity: 0; }
+    }
+
+    @keyframes shoot2 {
+      0% { opacity: 0; transform: translate(0,0) rotate(-35deg); }
+      10% { opacity: 1; }
+      22% { opacity: 0; transform: translate(-400px, 300px) rotate(-35deg); }
+      100% { opacity: 0; }
+    }
+
+    @keyframes shoot3 {
+      0% { opacity: 0; transform: translate(0,0) rotate(-35deg); }
+      12% { opacity: 1; }
+      24% { opacity: 0; transform: translate(-280px, 200px) rotate(-35deg); }
+      100% { opacity: 0; }
+    }
+
+    @keyframes shoot4 {
+      0% { opacity: 0; transform: translate(0,0) rotate(-35deg); }
+      10% { opacity: 1; }
+      22% { opacity: 0; transform: translate(-300px, 220px) rotate(-35deg); }
+      100% { opacity: 0; }
+    }
+
+    @keyframes shoot5 {
+      0% { opacity: 0; transform: translate(0,0) rotate(-35deg); }
+      8% { opacity: 1; }
+      24% { opacity: 0; transform: translate(-240px, 180px) rotate(-35deg); }
+      100% { opacity: 0; }
+    }
+
+    @media (max-width: 768px) {
+      .planet1 { width: 160px; height: 160px; }
+      .planet2 { width: 100px; height: 100px; }
+      .nebula { width: 350px; height: 350px; filter: blur(90px); }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NEBULA (NEW) -->
+  <div class="nebula nebula1"></div>
+  <div class="nebula nebula2"></div>
+
+  <!-- SPACE BACKGROUND -->
+  <div class="stars"></div>
+  <div class="twinkling"></div>
+
+  <div class="planet planet1"></div>
+  <div class="planet planet2"></div>
+
+  <div class="shooting-star shooting1"></div>
+  <div class="shooting-star shooting2"></div>
+  <div class="shooting-star shooting3"></div>
+  <div class="shooting-star shooting4"></div>
+  <div class="shooting-star shooting5"></div>
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 left-0 w-full z-50 glass">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <h1 class="text-sm uppercase tracking-[0.2em] text-blue-300">Portfolio</h1>
+
+      <div class="hidden md:flex gap-8 text-sm">
+        <a href="#about" class="hover:text-blue-300 transition">About</a>
+        <a href="#education" class="hover:text-blue-300 transition">Education</a>
+        <a href="#experience" class="hover:text-blue-300 transition">Experience</a>
+        <a href="#projects" class="hover:text-blue-300 transition">Projects</a>
+        <a href="#contact" class="hover:text-blue-300 transition">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="min-h-screen flex items-center px-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-14 items-center">
+
+      <div>
+        <p class="uppercase tracking-[0.3em] text-blue-300 text-sm mb-5">
+          Technology Consulting • AI • Analytics
+        </p>
+
+        <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6">
+          Hi, I'm<br>
+          <span class="gradient-text">Wen Jun Tan</span>
+        </h1>
+
+        <p class="text-gray-300 text-lg leading-relaxed mb-8 max-w-xl">
+          Technology Consultant at KPMG focused on digital transformation and AI-driven solutions. I enjoy building interactive, data-driven experiences.
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="#projects" class="px-6 py-3 rounded-2xl bg-blue-500 hover:bg-blue-400 transition font-semibold glow">
+            View Projects
+          </a>
+
+          <a href="Tan_Wen_Jun_Resume.pdf"
+             download
+             class="px-6 py-3 rounded-2xl border border-white/20 hover:bg-white/10 transition font-semibold">
+            ⬇ Download Resume
+          </a>
+        </div>
+      </div>
+
+      <div class="floating">
+        <div class="glass rounded-3xl p-8 glow">
+          <h2 class="text-2xl font-bold mb-6">Quick Snapshot</h2>
+
+          <div class="space-y-5">
+            <div class="bg-white/5 rounded-2xl p-5">
+              <p class="text-sm text-gray-400">Current Role</p>
+              <h3 class="font-semibold text-lg">Associate @ KPMG Technology Consulting</h3>
+            </div>
+
+            <div class="bg-white/5 rounded-2xl p-5">
+              <p class="text-sm text-gray-400">Education</p>
+              <h3 class="font-semibold text-lg">NUS Business Administration</h3>
+            </div>
+
+            <div class="bg-white/5 rounded-2xl p-5">
+              <p class="text-sm text-gray-400">Interests</p>
+              <h3 class="font-semibold text-lg">
+                Digital Transformation • AI • Analytics • Automation
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+<!-- ABOUT -->
+<section id="about" class="px-6 py-24">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-14">
+      <p class="text-blue-300 uppercase tracking-[0.25em] text-sm mb-3">
+        About Me
+      </p>
+
+      <h2 class="text-4xl md:text-5xl font-extrabold">
+        Blending consulting,<br>
+        <span class="gradient-text">technology & creativity</span>
+      </h2>
+    </div>
+
+    <div class="glass rounded-3xl p-8 md:p-10 text-gray-300 text-lg leading-relaxed">
+      <p class="mb-6">
+      I currently work in Technology Consulting at KPMG, delivering enterprise digital transformation initiatives through Workday implementation projects. My work involves translating business requirements into structured system solutions, coordinating stakeholders, and driving end-to-end delivery from design through deployment.
+      </p>
+
+      <p class="mb-6">
+        Outside of work, I enjoy building side projects, exploring AI and analytics, and experimenting with modern web design. I also stay active through fitness and training, which helps me maintain discipline and consistency in my daily life.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="px-6 py-24">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-14">
+      <p class="text-blue-300 uppercase tracking-[0.25em] text-sm mb-3">
+        Education
+      </p>
+
+      <h2 class="text-4xl md:text-5xl font-extrabold">
+        Academic <span class="gradient-text">background</span>
+      </h2>
+    </div>
+
+    <div class="glass rounded-3xl p-8">
+      <div class="flex flex-col md:flex-row md:justify-between md:items-center">
+        <div>
+          <h3 class="text-2xl font-bold">
+            National University of Singapore
+          </h3>
+
+          <p class="text-blue-300">
+            Bachelor of Business Administration (Honours), Specialisation in Business Analytics & Finance
+          </p>
+        </div>
+
+        <p class="text-gray-400 mt-2 md:mt-0">
+          Aug 2020 – May 2024
+        </p>
+      </div>
+
+      <ul class="mt-6 space-y-2 text-gray-300 leading-relaxed list-disc list-inside">
+        <li>Cumulative GPA: 4.24 / 5.00</li>
+        <li>
+          International Exchange: Selected as one of seven students to represent NUS at Indiana University, Bloomington (USA)
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="px-6 py-24">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-14">
+      <p class="text-blue-300 uppercase tracking-[0.25em] text-sm mb-3">
+        Experience
+      </p>
+
+      <h2 class="text-4xl md:text-5xl font-extrabold">
+        My <span class="gradient-text">journey so far</span>
+      </h2>
+    </div>
+
+    <div class="space-y-8">
+
+      <!-- KPMG -->
+      <div class="glass rounded-3xl p-8">
+        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-5">
+          <div>
+            <h3 class="text-2xl font-bold">KPMG</h3>
+            <p class="text-blue-300">Associate — Technology Consulting</p>
+          </div>
+
+          <p class="text-gray-400 mt-2 md:mt-0">
+            Jul 2024 – Present
+          </p>
+        </div>
+
+        <p class="text-gray-300 leading-relaxed mb-5">
+          Delivered end-to-end Workday implementation projects across multiple modules, from requirements gathering and system design to testing, deployment, and change management.
+        </p>
+
+        <div class="flex flex-wrap gap-3">
+          <span class="tag px-4 py-2 rounded-full text-sm">Workday</span>
+          <span class="tag px-4 py-2 rounded-full text-sm">Business Analysis</span>
+          <span class="tag px-4 py-2 rounded-full text-sm">Stakeholder Management</span>
+          <span class="tag px-4 py-2 rounded-full text-sm">Change Management</span>
+        </div>
+      </div>
+
+      <!-- ACCENTURE -->
+      <div class="glass rounded-3xl p-8">
+        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-5">
+          <div>
+            <h3 class="text-2xl font-bold">Accenture</h3>
+            <p class="text-blue-300">Business & Technology Intern</p>
+          </div>
+
+          <p class="text-gray-400 mt-2 md:mt-0">
+            Jan 2023 – Jun 2023
+          </p>
+        </div>
+
+        <p class="text-gray-300 leading-relaxed mb-5">
+          Worked on a large-scale Workday ERP implementation project, supporting testing operations, stakeholder coordination, and project tracking across multiple agencies.
+        </p>
+
+        <div class="flex flex-wrap gap-3">
+          <span class="tag px-4 py-2 rounded-full text-sm">Workday</span>
+          <span class="tag px-4 py-2 rounded-full text-sm">Testing</span>
+          <span class="tag px-4 py-2 rounded-full text-sm">Microsoft Excel</span>
+        </div>
+      </div>
+
+      <!-- SACHI SKIN -->
+      <div class="glass rounded-3xl p-8">
+        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-5">
+          <div>
+            <h3 class="text-2xl font-bold">Sachi Skin</h3>
+             <p class="text-blue-300">Business Analyst Intern</p>
+          </div>
+
+           <p class="text-gray-400 mt-2 md:mt-0">
+             May 2022 – Jul 2022
+          </p>
+        </div>
+
+        <p class="text-gray-300 leading-relaxed mb-5">
+    Conducted competitive landscape analysis to inform pricing strategy and supported Marketing with Excel dashboards tracking product performance, affiliate conversions, and campaign effectiveness.
+        </p>
+
+        <div class="flex flex-wrap gap-3">
+          <span class="tag px-4 py-2 rounded-full text-sm">Data Analysis</span>
+          <span class="tag px-4 py-2 rounded-full text-sm">Excel</span>
+          <span class="tag px-4 py-2 rounded-full text-sm">Marketing Analytics</span>
+          <span class="tag px-4 py-2 rounded-full text-sm">Pricing Strategy</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="px-6 py-24">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-14">
+      <p class="text-blue-300 uppercase tracking-[0.25em] text-sm mb-3">
+        Personal Projects
+      </p>
+
+      <h2 class="text-4xl md:text-5xl font-extrabold">
+        Things I've <span class="gradient-text">built</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+
+      <!-- PROJECT -->
+      <div class="project-card glass rounded-3xl p-8">
+        <div class="text-5xl mb-5">🎂</div>
+        <h3 class="text-2xl font-bold mb-4">Birthday Card Chaos Machine</h3>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          An interactive birthday card generator that creates funny, dynamic birthday messages with downloadable card designs.
+        </p>
+        <a href="#" class="text-blue-300 font-semibold hover:text-blue-200 transition">
+          View Project →
+        </a>
+      </div>
+
+      <!-- PLACEHOLDER -->
+      <div class="project-card glass rounded-3xl p-8">
+        <div class="text-5xl mb-5">🤖</div>
+        <h3 class="text-2xl font-bold mb-4">Upcoming AI Project</h3>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          Placeholder for future AI, analytics, or data visualisation projects.
+        </p>
+        <a href="#" class="text-blue-300 font-semibold hover:text-blue-200 transition">
+          Coming Soon →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="px-6 py-24">
+  <div class="max-w-4xl mx-auto">
+    <div class="glass rounded-3xl p-10 text-center glow">
+      <p class="text-blue-300 uppercase tracking-[0.25em] text-sm mb-3">
+        Contact
+      </p>
+
+      <h2 class="text-4xl md:text-5xl font-extrabold mb-6">
+        Let's connect
+      </h2>
+
+      <p class="text-gray-300 text-lg mb-10 max-w-2xl mx-auto">
+        Feel free to reach out regarding opportunities, or just to connect.
+      </p>
+
+      <div class="space-y-5 text-lg">
+        <p>
+          📧 <a href="mailto:tanwj00@gmail.com" class="text-blue-300 hover:text-blue-200 transition">
+            tanwj00@gmail.com
+          </a>
+        </p>
+
+        <p>
+          📱 <a href="tel:+6590220805" class="text-blue-300 hover:text-blue-200 transition">
+            +65 9022 0805
+          </a>
+        </p>
+
+        <p>
+          💼 <a href="https://www.linkedin.com/in/wen-jun-tan-b57926208/" target="_blank" class="text-blue-300 hover:text-blue-200 transition">
+            LinkedIn
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="px-6 py-10">
+  <div class="max-w-6xl mx-auto border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="text-gray-400 text-sm">© 2026 Wen Jun Tan</p>
+
+    <div class="flex gap-5 text-sm text-gray-400">
+      <a href="https://www.linkedin.com/in/wen-jun-tan-b57926208/" target="_blank" class="hover:text-white transition">
+        LinkedIn
+      </a>
+
+      <a href="mailto:tanwj00@gmail.com" class="hover:text-white transition">
+        Email
+      </a>
+    </div>
+  </div>
+</footer>
